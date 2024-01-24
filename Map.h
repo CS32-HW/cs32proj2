@@ -5,9 +5,6 @@
 using KeyType = std::string;
 using ValueType = double;
 
-bool merge(const Map& m1, const Map& m2, Map& result);
-void reassign(const Map& m, Map& result);
-
 class Map
 {
   public:
@@ -38,5 +35,8 @@ class Map
     Pair* getKey(const KeyType& key) const;
       // returns a pointer to the Pair containing the key
 };
+
+bool merge(const Map& m1, const Map& m2, Map& result);
+void reassign(const Map& m, Map& result);
 
 #endif // Map_h
