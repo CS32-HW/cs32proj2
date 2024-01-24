@@ -18,3 +18,15 @@ Map::~Map()
 		curr = next;
 	}
 }
+
+//TODO copy constructor and assignment operator
+
+bool Map::empty() const
+{
+	return map_size == 0;
+}
+
+int Map::size() const
+{
+	return map_size;
+}

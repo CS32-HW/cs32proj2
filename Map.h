@@ -34,6 +34,7 @@ class Map
 
     Pair* getKey(const KeyType& key) const;
       // returns a pointer to the Pair containing the key
+      // returns nullptr if not found
 };
 
 bool merge(const Map& m1, const Map& m2, Map& result);
