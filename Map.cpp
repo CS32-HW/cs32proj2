@@ -114,3 +114,18 @@ bool Map::erase(const KeyType& key)
 	map_size--;
 	return true;
 }
+
+bool Map::contains(const KeyType& key) const
+{
+	return getPair(key) != nullptr;
+}
+
+bool Map::get(const KeyType& key, ValueType& value) const
+{
+	Pair* p = getPair(key);
+	if (p == nullptr)
+		return false;
+
+	value = p->value;
+	return true;
+}
