@@ -31,7 +31,7 @@ int Map::size() const
 	return map_size;
 }
 
-bool insert(const KeyType& key, const ValueType& value)
+bool Map::insert(const KeyType& key, const ValueType& value)
 {
 	if (getPair(key) != nullptr) // key already exists
 		return false;
