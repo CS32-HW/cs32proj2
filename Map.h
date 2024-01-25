@@ -46,7 +46,6 @@ class Map
 
         return p;
     }
-
 };
 
 bool merge(const Map& m1, const Map& m2, Map& result);

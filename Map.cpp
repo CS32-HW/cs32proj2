@@ -129,3 +129,21 @@ bool Map::get(const KeyType& key, ValueType& value) const
 	value = p->value;
 	return true;
 }
+
+bool Map::get(int i, KeyType& key, ValueType& value) const
+{
+	if (i < 0 || i >= map_size)
+		return false;
+
+	Pair* p = head;
+	int count = 0;
+	// traverse the list i times
+	while (p != nullptr && count < i) {
+		p = p->next;
+		count++;
+	}
+
+	key = p->key;
+	value = p->value;
+	return true;
+}
