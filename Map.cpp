@@ -114,3 +114,16 @@ bool Map::erase(const KeyType& key)
 	map_size--;
 	return true;
 }
+
+Pair* Map::getPair(const KeyType& key) const
+{
+	Pair* p = head;
+
+	while (p != nullptr) {
+		if (p->key == key)
+			break;
+		p = p->next;
+	}
+
+	return p;
+}
