@@ -123,7 +123,7 @@ bool Map::contains(const KeyType& key) const
 bool Map::get(const KeyType& key, ValueType& value) const
 {
 	Pair* p = getPair(key);
-	if (p == nullptr)
+	if (p == nullptr) // key doesn't exist
 		return false;
 
 	value = p->value;
@@ -146,4 +146,19 @@ bool Map::get(int i, KeyType& key, ValueType& value) const
 	key = p->key;
 	value = p->value;
 	return true;
+}
+
+void Map::swap(Map& other)
+{
+	Pair* tmp;
+
+	// swap head pointer
+	tmp = other.head;
+	other.head = head;
+	head = tmp;
+
+	// swap tail pointer
+	tmp = other.tail;
+	other.tail = tail;
+	tail = tmp;
 }
