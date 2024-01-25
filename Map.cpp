@@ -203,3 +203,70 @@ void Map::swap(Map& other)
 	other.map_size = map_size;
 	map_size = tmp_size;
 }
+
+bool merge(const Map& m1, const Map& m2, Map& result)
+{
+	bool retval = true;
+	KeyType k;
+	ValueType v, v2;
+
+	// erase all nodes in result
+	for (int i = 0; i < result.size(); i++) {
+		result.get(i, k, v);
+		result.erase(k);
+	}
+
+	// interate over every node in m1
+	for (int i = 0; i < m1.size(); i++) {
+		m1.get(i, k, v);
+		if (!m2.get(k, v2) || v == v2)
+			result.insert(k, v);
+		else
+			retval = false;
+	}
+
+	// iterate over every node in m2
+	for (int i = 0; i < m2.size(); i++) {
+		m2.get(i, k, v);
+		if (!m1.get(k, v2) || v == v2)
+			result.insert(k, v);
+		else
+			retval = false;
+	}
+
+	return retval;
+}
+
+void reassign(const Map& m, Map& result)
+{
+	KeyType k1, k2;
+	ValueType v1, v2;
+
+	// erase all nodes in result
+	for (int i = 0; i < result.size(); i++) {
+		result.get(i, k1, v1);
+		result.erase(k1);
+	}
+
+	if (m.size() <= 0) {
+		; // do nothing
+	} else if (m.size() == 1) {
+		m.get(0, k1, v1);
+		result.insert(k1, v1);
+	} else {
+		// shifts all the values up (but keys stay in place)
+		m.get(0, k1, v1);
+		for (int i = 1; i < m.size(); i++) {
+			m.get(i, k2, v2);
+			result.insert(k1, v2);
+			k1 = k2;
+			v1 = v2;
+		}
+		m.get(0, k1, v1);
+		result.insert(k2, v1);
+	}
+
+	return;
+}
+
+// TODO check for aliasing
