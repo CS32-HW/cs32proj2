@@ -82,3 +82,11 @@ bool Map::update(const KeyType& key, const ValueType& value)
 	p->value = value;
 	return true;
 }
+
+bool Map::insertOrUpdate(const KeyType& key, const ValueType& value)
+{
+	// insert will only fail if key already exists
+	if (!insert(key, value))
+		update(key,value);
+	return true;
+}
