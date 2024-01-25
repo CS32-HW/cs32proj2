@@ -72,3 +72,13 @@ bool insert(const KeyType& key, const ValueType& value)
 
 	return true;
 }
+
+bool Map::update(const KeyType& key, const ValueType& value)
+{
+	Pair* p = getPair(key);
+	if (p == nullptr) // key doesn't exist
+		return false;
+
+	p->value = value;
+	return true;
+}
