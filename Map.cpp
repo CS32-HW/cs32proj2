@@ -19,7 +19,42 @@ Map::~Map()
 	}
 }
 
-//TODO copy constructor and assignment operator
+Map::Map(const Map& other) : Map()
+{
+	KeyType k;
+	ValueType v;
+	// iterate through other's linked list and copy keys and values
+	for (int i = 0; i < other.size(); i++) {
+		other.get(i, k, v);
+		insert(k, v);
+	}
+}
+
+Map& Map::operator=(const Map& other)
+{
+	Pair* curr = head;
+	Pair* next;
+
+	// traverse the linked list and delete every node
+	while (curr != nullptr) {
+		next = curr->next;
+		delete curr;
+		curr = next;
+	}
+
+	head = tail = nullptr;
+	map_size = 0;
+
+	KeyType k;
+	ValueType v;
+	// iterate through other's linked list and copy keys and values
+	for (int i = 0; i < other.size(); i++) {
+		other.get(i, k, v);
+		insert(k, v);
+	}
+
+	return *this;
+}
 
 bool Map::empty() const
 {
