@@ -32,7 +32,7 @@ class Map
     Pair *head, *tail;
     int map_size;
 
-    Pair* getKey(const KeyType& key) const;
+    Pair* getPair(const KeyType& key) const;
       // returns a pointer to the Pair containing the key
       // returns nullptr if not found
 };
