@@ -43,6 +43,7 @@ bool insert(const KeyType& key, const ValueType& value)
 	if (head == nullptr) { // empty list
 		p->prev = p->next = nullptr;
 		head = tail = p;
+		map_size++;
 		return true;
 	}
 
@@ -70,6 +71,7 @@ bool insert(const KeyType& key, const ValueType& value)
 		curr->prev = p;
 	}
 
+	map_size++;
 	return true;
 }
 
@@ -109,5 +111,6 @@ bool Map::erase(const KeyType& key)
 	}
 	delete p;
 
+	map_size--;
 	return true;
 }
