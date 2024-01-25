@@ -90,3 +90,24 @@ bool Map::insertOrUpdate(const KeyType& key, const ValueType& value)
 		update(key,value);
 	return true;
 }
+
+bool Map::erase(const KeyType& key)
+{
+	Pair* p = getPair(key);
+	if (p == nullptr) // key doesn't exist
+		return false;
+
+	if (p == head) { // delete top node
+		p->next->prev = nullptr;
+		head = p->next;
+	} else if (p == tail) { // delete bottom node
+		p->prev->next = nullptr;
+		tail = p->prev;
+	} else { // delete middle node
+		p->prev->next = p->next;
+		p->next->prev = p->prev;
+	}
+	delete p;
+
+	return true;
+}
