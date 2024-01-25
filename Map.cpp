@@ -19,7 +19,7 @@ Map::~Map()
 	}
 }
 
-Map::Map(const Map& other) : Map()
+Map::Map(const Map& other) : Map() // constructor delegation
 {
 	KeyType k;
 	ValueType v;
@@ -196,4 +196,10 @@ void Map::swap(Map& other)
 	tmp = other.tail;
 	other.tail = tail;
 	tail = tmp;
+
+	// swap map_size
+	int tmp_size;
+	tmp_size = other.map_size;
+	other.map_size = map_size;
+	map_size = tmp_size;
 }
