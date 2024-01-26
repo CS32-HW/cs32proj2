@@ -135,11 +135,19 @@ bool Map::erase(const KeyType& key)
 		return false;
 
 	if (p == head) { // delete top node
-		p->next->prev = nullptr;
-		head = p->next;
+		if (p->next != nullptr) {
+			p->next->prev = nullptr;
+			head = p->next;
+		} else { // only one item in list
+			head = tail = nullptr;
+		}
 	} else if (p == tail) { // delete bottom node
-		p->prev->next = nullptr;
-		tail = p->prev;
+		if (p->prev != nullptr) {
+			p->prev->next = nullptr;
+			tail = p->prev;
+		} else { // only one item in list
+			head = tail = nullptr;
+		}
 	} else { // delete middle node
 		p->prev->next = p->next;
 		p->next->prev = p->prev;
