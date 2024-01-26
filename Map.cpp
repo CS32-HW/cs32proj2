@@ -32,6 +32,9 @@ Map::Map(const Map& other) : Map() // constructor delegation
 
 Map& Map::operator=(const Map& other)
 {
+	if (this == &other) // check for aliasing
+		return *this;
+
 	Pair* curr = head;
 	Pair* next;
 
