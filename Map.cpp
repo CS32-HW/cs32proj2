@@ -221,10 +221,13 @@ bool merge(const Map& m1, const Map& m2, Map& result)
 	KeyType k;
 	ValueType v, v2;
 
-	// erase all nodes in result
-	for (int i = 0; i < result.size(); i++) {
-		result.get(i, k, v);
-		result.erase(k);
+	// check for no aliasing
+	if (!(&m1 == &result || &m2 == &result)) {
+		// erase all nodes in result
+		for (int i = 0; i < result.size(); i++) {
+			result.get(i, k, v);
+			result.erase(k);
+		}
 	}
 
 	// interate over every node in m1
