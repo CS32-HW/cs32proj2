@@ -88,6 +88,7 @@ int main()
 	Map m7(m5);
 	assert(m7.size() == 4 && m7.get(3, k, v) && k == "d" && v == 4);
 	cout << "test 5 passed (swap, assignment, and copy constructor)" << endl;
+
 	Map m8;
 	m8.insert("a", 1);
 	m8.insert("b", 2);
@@ -99,4 +100,41 @@ int main()
 	} //m9 goes out of scope
 	// test that m8 still works
 	assert(m8.get(2, k, v) && k == "c" && v == 3);
+	if (true) {
+		Map m9;
+		m9 = m8;
+		assert(m9.get(3, k, v) && k == "d" && v == 4);
+	} // m9 goes out of scope
+	// test that m8 still works
+	assert(m8.get(2, k, v) && k == "c" && v == 3);
+	cout << "test 6 passed (copy and assignment memory leak)" << endl;
+
+	Map m9;
+	m9.insert("Fred", 123);
+	m9.insert("Ethel", 456);
+	m9.insert("Lucy", 789);
+	Map m10;
+	m10.insert("Lucy", 789);
+	m10.insert("Ricky", 321);
+	Map result;
+	result.insert("Ethan", 1);
+	assert(merge(m9, m10, result));
+	assert(result.size() == 4 && result.get("Lucy", v) && v == 789);
+	assert(merge(m9, m10, m10));
+	assert(m10.size() == 4 && m10.get("Lucy", v) && v == 789);
+	assert(merge(m10, m10, m10));
+	assert(m10.size() == 4 && m10.get("Fred", v) && v == 123);
+	cout << "test 7 passed (merge and aliasing)" << endl;
+
+	Map m11;
+	m11.insert("a", 1);
+	m11.insert("b", 2);
+	m11 = m11;
+	assert(m11.size() == 2 && m11.get("a", v) && v == 1);
+	assert(m11.get("b", v) && v == 2);
+	cout << "test 8 passed (reassign aliasing)" << endl;
+
+	Map m12;
+	m12.insert("a", 1);
+	m12.insert("b", 2);
 }
