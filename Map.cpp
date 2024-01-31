@@ -259,29 +259,36 @@ void reassign(const Map& m, Map& result)
 {
 	KeyType k1, k2;
 	ValueType v1, v2;
-
-	// erase all nodes in result
-	for (int i = 0; i < result.size(); i++) {
-		result.get(i, k1, v1);
-		result.erase(k1);
-	}
+	Map tmp;
 
 	if (m.size() <= 0) {
 		; // do nothing
 	} else if (m.size() == 1) {
 		m.get(0, k1, v1);
-		result.insert(k1, v1);
+		tmp.insert(k1, v1);
 	} else {
 		// shifts all the values up (but keys stay in place)
 		m.get(0, k1, v1);
 		for (int i = 1; i < m.size(); i++) {
 			m.get(i, k2, v2);
-			result.insert(k1, v2);
+			tmp.insert(k1, v2);
 			k1 = k2;
 			v1 = v2;
 		}
 		m.get(0, k1, v1);
-		result.insert(k2, v1);
+		tmp.insert(k2, v1);
+	}
+
+	// erase all nodes in result
+	while (result.size() > 0) {
+		result.get(0, k1, v1);
+		result.erase(k1);
+	}
+
+	// copy all nodes from tmp to result
+	for (int i = 0; i < tmp.size(); i++) {
+		tmp.get(i, k1, v1);
+		result.insert(k1, v1);
 	}
 
 	return;
