@@ -293,5 +293,3 @@ void reassign(const Map& m, Map& result)
 
 	return;
 }
-
-// TODO check for aliasing
