@@ -233,19 +233,23 @@ bool merge(const Map& m1, const Map& m2, Map& result)
 	// interate over every node in m1
 	for (int i = 0; i < m1.size(); i++) {
 		m1.get(i, k, v);
-		if (!m2.get(k, v2) || v == v2)
+		if (!m2.get(k, v2) || v == v2) {
 			result.insert(k, v);
-		else
+		} else {
+			result.erase(k); // in case there's aliasing
 			retval = false;
+		}
 	}
 
 	// iterate over every node in m2
 	for (int i = 0; i < m2.size(); i++) {
 		m2.get(i, k, v);
-		if (!m1.get(k, v2) || v == v2)
+		if (!m1.get(k, v2) || v == v2) {
 			result.insert(k, v);
-		else
+		} else {
+			result.erase(k); // in case there's aliasing
 			retval = false;
+		}
 	}
 
 	return retval;
