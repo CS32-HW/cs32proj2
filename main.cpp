@@ -77,15 +77,16 @@ int main()
 	Map m6;
 	m6.insert("e", 5);
 	m6.insert("f", 6);
-	m6.swap(m5);
+	m6.swap(m5); // test swap
+	// verify swap was successful
 	assert(m5.contains("f") && m6.contains("a"));
 	assert(m5.size() == 2 && m6.size() == 4);
 	assert(m6.get(2, k, v) && k == "c" && v == 3);
 	assert(m5.get(0, k, v) && k == "e" && v == 5);
 	assert(!m5.get(2, k, v));
-	m5 = m6;
+	m5 = m6; // test assignment operator
 	assert(m5.size() == 4 && m5.get(2, k, v) && k == "c" && v == 3);
-	Map m7(m5);
+	Map m7(m5); // test copy constructor
 	assert(m7.size() == 4 && m7.get(3, k, v) && k == "d" && v == 4);
 	cout << "test 5 passed (swap, assignment, and copy constructor)" << endl;
 
@@ -118,11 +119,12 @@ int main()
 	m10.insert("Ricky", 321);
 	Map result;
 	result.insert("Ethan", 1);
+	// test merge function with something already in result map
 	assert(merge(m9, m10, result));
 	assert(result.size() == 4 && result.get("Lucy", v) && v == 789);
-	assert(merge(m9, m10, m10));
+	assert(merge(m9, m10, m10)); // test merge function with aliasing
 	assert(m10.size() == 4 && m10.get("Lucy", v) && v == 789);
-	assert(merge(m10, m10, m10));
+	assert(merge(m10, m10, m10)); // test merge function with all maps aliased
 	assert(m10.size() == 4 && m10.get("Fred", v) && v == 123);
 	Map m11;
 	m11.insert("Fred", 123);
@@ -131,24 +133,24 @@ int main()
 	Map m12;
 	m12.insert("Lucy", 654);
 	m12.insert("Ricky", 321);
-	merge(m11, m12, result);
-	assert(result.size() == 3 && !result.contains("Lucy"));
+	merge(m11, m12, result); // test merge, but "Lucy" has two different values
+	assert(result.size() == 3 && !result.contains("Lucy")); // result shouldn't contain Lucy
 	assert(result.contains("Fred") && result.contains("Ethel") && result.contains("Ricky"));
 	cout << "test 7 passed (merge and aliasing)" << endl;
 
 	Map m13;
 	m13.insert("a", 1);
 	m13.insert("b", 2);
-	m13 = m13;
+	m13 = m13; // test aliased assignment operator
 	assert(m13.size() == 2 && m13.get("a", v) && v == 1);
 	assert(m13.get("b", v) && v == 2);
-	cout << "test 8 passed (reassign aliasing)" << endl;
+	cout << "test 8 passed (assignment operator aliasing)" << endl;
 
 	Map m14;
 	m14.insert("a", 1);
 	m14.insert("b", 2);
 	m14.insert("c", 3);
-	reassign(m14, result);
+	reassign(m14, result); // test reassign function
 	assert(result.size() == 3 && result.get("a", v) && v == 2);
 	assert(result.get("b", v) && v == 3);
 	assert(result.get("c", v) && v == 1);
@@ -157,10 +159,10 @@ int main()
 	assert(m14.get("b", v) && v == 3);
 	assert(m14.get("c", v) && v == 1);
 	Map m15;
-	reassign(m15, result); // test on empty map
+	reassign(m15, result); // test reassign on empty map
 	assert(result.size() == 0);
 	m15.insert("a", 1);
-	reassign(m15, result); // test on map with size 1
+	reassign(m15, result); // test reassign on map with size 1
 	assert(result.size() == 1 && result.get("a", v) && v == 1);
 	cout << "test 9 passed (reassign function and aliasing)" << endl;
 }
