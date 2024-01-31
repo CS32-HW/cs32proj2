@@ -124,17 +124,43 @@ int main()
 	assert(m10.size() == 4 && m10.get("Lucy", v) && v == 789);
 	assert(merge(m10, m10, m10));
 	assert(m10.size() == 4 && m10.get("Fred", v) && v == 123);
+	Map m11;
+	m11.insert("Fred", 123);
+	m11.insert("Ethel", 456);
+	m11.insert("Lucy", 789);
+	Map m12;
+	m12.insert("Lucy", 654);
+	m12.insert("Ricky", 321);
+	merge(m11, m12, result);
+	assert(result.size() == 3 && !result.contains("Lucy"));
+	assert(result.contains("Fred") && result.contains("Ethel") && result.contains("Ricky"));
 	cout << "test 7 passed (merge and aliasing)" << endl;
 
-	Map m11;
-	m11.insert("a", 1);
-	m11.insert("b", 2);
-	m11 = m11;
-	assert(m11.size() == 2 && m11.get("a", v) && v == 1);
-	assert(m11.get("b", v) && v == 2);
+	Map m13;
+	m13.insert("a", 1);
+	m13.insert("b", 2);
+	m13 = m13;
+	assert(m13.size() == 2 && m13.get("a", v) && v == 1);
+	assert(m13.get("b", v) && v == 2);
 	cout << "test 8 passed (reassign aliasing)" << endl;
 
-	Map m12;
-	m12.insert("a", 1);
-	m12.insert("b", 2);
+	Map m14;
+	m14.insert("a", 1);
+	m14.insert("b", 2);
+	m14.insert("c", 3);
+	reassign(m14, result);
+	assert(result.size() == 3 && result.get("a", v) && v == 2);
+	assert(result.get("b", v) && v == 3);
+	assert(result.get("c", v) && v == 1);
+	reassign(m14, m14); // test aliasing for reassign function
+	assert(m14.size() == 3 && m14.get("a", v) && v == 2);
+	assert(m14.get("b", v) && v == 3);
+	assert(m14.get("c", v) && v == 1);
+	Map m15;
+	reassign(m15, result); // test on empty map
+	assert(result.size() == 0);
+	m15.insert("a", 1);
+	reassign(m15, result); // test on map with size 1
+	assert(result.size() == 1 && result.get("a", v) && v == 1);
+	cout << "test 9 passed (reassign function and aliasing)" << endl;
 }
